@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://kit.fontawesome.com/c8a10d6071.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section
+      class="icons"
+      style="
+        background-color: red;
+        width: 30px;
+        height: 30px;
+        position: absolute;
+      "
+    ></section>
+    <!-- <textarea name="text" id="text"></textarea> -->
+    <script>
+      let icons = document.querySelector(".icons");
+      let dirY = 1;
+      let dirX = 1;
+      let mousePX=0
+      let mousePY=0
+      let speed=1
+      let x = 0;
+      let y = 0;
+      function calc(x, y, cx, cy) {
+        
+        let s = ((cx-x)**2+(cy-y)**2)**(1/2);
+        dirY=speed*((cx-x)/s)
+        dirX=speed*((cy-y)/s)
+        console.log("mousePX" ,cx,"mousePY",cy,"s",s,"dirX",dirX,"dirY",dirY,"x",x,y,"y")
+
+      }
+      window.addEventListener("mousemove", (e) => {
+        
+          mousePX=e.clientX
+          mousePY=e.clientY
+          console.log("mousePX" ,mousePX,"mousePY",mousePY)
+      });
+
+      setInterval(() => {
+        x += dirX;
+        y += dirY;
+        calc(x, y, mousePX, mousePY) 
+        icons.style.top = x + "px";
+        icons.style.left = y + "px";
+      }, 10);
+      //   let input = document.getElementById("input");
+      //   let x = document.getElementById("x");
+      //   input.addEventListener("blur", (e) => {
+      //     if (!e.target.value.match(/([0-9]|&[a-z]&_)+/))
+      //       x.innerHTML = "pleas add num and str and _";
+      //   });
+    </script>
+  </body>
+</html>
