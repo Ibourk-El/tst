@@ -22,42 +22,102 @@
     ></section>
     <!-- <textarea name="text" id="text"></textarea> -->
     <script>
-      let icons = document.querySelector(".icons");
-      let dirY = 1;
-      let dirX = 1;
-      let mousePX=0
-      let mousePY=0
-      let speed=1
-      let x = 0;
-      let y = 0;
-      function calc(x, y, cx, cy) {
-        
-        let s = ((cx-x)**2+(cy-y)**2)**(1/2);
-        dirY=speed*((cx-x)/s)
-        dirX=speed*((cy-y)/s)
-        console.log("mousePX" ,cx,"mousePY",cy,"s",s,"dirX",dirX,"dirY",dirY,"x",x,y,"y")
+      let icons = document.querySelectorAll("i");
+let text_box = document.getElementById("text-box");
+let textInput = document.getElementById("inputText");
 
-      }
-      window.addEventListener("mousemove", (e) => {
-        
-          mousePX=e.clientX
-          mousePY=e.clientY
-          console.log("mousePX" ,mousePX,"mousePY",mousePY)
-      });
+let textArr = [createElement("span")];
+let index = 0;
+let text = "";
+let isStartWriting = true;
 
-      setInterval(() => {
-        x += dirX;
-        y += dirY;
-        calc(x, y, mousePX, mousePY) 
-        icons.style.top = x + "px";
-        icons.style.left = y + "px";
-      }, 10);
-      //   let input = document.getElementById("input");
-      //   let x = document.getElementById("x");
-      //   input.addEventListener("blur", (e) => {
-      //     if (!e.target.value.match(/([0-9]|&[a-z]&_)+/))
-      //       x.innerHTML = "pleas add num and str and _";
-      //   });
+icons.forEach((el) => {
+  el.addEventListener("click", (e) => {
+    e.target.classList.toggle("active");
+    index++;
+    console.log(textArr);
+    if (e.target.getAttribute("data-style") === "bold") {
+      textArr.push(createElement("b"));
+    }
+    if (e.target.getAttribute("data-style") === "italic") {
+      textArr.push(createElement("i"));
+    }
+    if (e.target.getAttribute("data-style") === "underline") {
+      textArr[index].classList.add("underline");
+    }
+    if (e.target.getAttribute("data-style") === "midelline") {
+      textArr[index].classList.add("italic");
+    }
+    if (e.target.getAttribute("data-style") === "ol") {
+    }
+    if (e.target.getAttribute("data-style") === "ul") {
+    }
+    isStartWriting = true;
+    // setDataInTextBox();
+  });
+});
+
+addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    textArr.push(createElement("br"));
+    textArr.push(createElement("span"));
+    index += 2;
+  } else if (e.key === "Backspace") {
+  } else {
+    if (isStartWriting) {
+      text_box.appendChild(textArr[index]);
+      isStartWriting = false;
+      console.log(text_box)
+    }
+    textArr[index].innerHTML += textInput.value;
+    textInput.value = "";
+  }
+});
+
+function createElement(el) {
+  let span = document.createElement(el);
+  return span;
+}
+
+function setDataInTextBox() {
+  let len = textArr.length;
+}
+      // let icons = document.querySelector(".icons");
+      // let dirY = 1;
+      // let dirX = 1;
+      // let mousePX=0
+      // let mousePY=0
+      // let speed=1
+      // let x = 0;
+      // let y = 0;
+      // function calc(x, y, cx, cy) {
+        
+      //   let s = ((cx-x)**2+(cy-y)**2)**(1/2);
+      //   dirY=speed*((cx-x)/s)
+      //   dirX=speed*((cy-y)/s)
+      //   console.log("mousePX" ,cx,"mousePY",cy,"s",s,"dirX",dirX,"dirY",dirY,"x",x,y,"y")
+
+      // }
+      // window.addEventListener("mousemove", (e) => {
+        
+      //     mousePX=e.clientX
+      //     mousePY=e.clientY
+      //     console.log("mousePX" ,mousePX,"mousePY",mousePY)
+      // });
+
+      // setInterval(() => {
+      //   x += dirX;
+      //   y += dirY;
+      //   calc(x, y, mousePX, mousePY) 
+      //   icons.style.top = x + "px";
+      //   icons.style.left = y + "px";
+      // }, 10);
+      // //   let input = document.getElementById("input");
+      // //   let x = document.getElementById("x");
+      // //   input.addEventListener("blur", (e) => {
+      // //     if (!e.target.value.match(/([0-9]|&[a-z]&_)+/))
+      // //       x.innerHTML = "pleas add num and str and _";
+      // //   });
     </script>
   </body>
 </html>
